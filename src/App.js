@@ -43,6 +43,16 @@ export default function App() {
     setPendingTasks(tasksPending);
   }, [tasks]);
 
+  useEffect(() => {
+    if (pendingTasks.length && availableServers.length) {
+      executeTask(pendingTasks[0], availableServers[0]);
+    }
+  }, [pendingTasks, availableServers]);
+
+  const executeTask = (server, task) => {
+    // setTasksInProgress([...tasksInProgress, taskInProgress]);
+  };
+
   const addServer = () => {
     let serverDetails = {};
     const serverId = Math.floor(Math.random() * Math.pow(10, 8) + 1);
@@ -64,11 +74,6 @@ export default function App() {
     taskDetails['name'] = taskName;
     taskDetails['status'] = 'PENDING';
     setTasks([...tasks, taskDetails]);
-    // setCurrentTask({
-    //   id: taskId,
-    //   name: taskName,
-    //   status: 'PENDING',
-    // });
   };
 
   return (
