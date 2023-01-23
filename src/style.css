@@ -4,7 +4,15 @@ p {
     Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
+#subContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+}
+
 .carousel-container {
+  width: -webkit-fill-available;
   background-color: whitesmoke;
   padding: 10px;
   border-radius: 2px;

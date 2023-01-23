@@ -1,0 +1,51 @@
+import React from 'react';
+import './style.css';
+
+function TableRows(props) {
+  const rows = props.tasks.map((task) => {
+    return task.status === 'PENDING' ? (
+      <tr>
+        <td>{task.name}</td>
+      </tr>
+    ) : null;
+  });
+
+  return rows;
+}
+
+export default class PendingTasks extends React.Component {
+  constructor(props) {
+    super(props);
+    this.addTask = this.addTask.bind(this);
+    this.toggleCarouselStyle = this.toggleCarouselStyle.bind(this);
+  }
+
+  addTask() {
+    this.props.addTask();
+  }
+
+  toggleCarouselStyle() {
+    let serverContainer = document.getElementById('availableTasksConatiner');
+    serverContainer.style.display =
+      serverContainer.style.display === 'none' ? 'flex' : 'none';
+  }
+
+  render() {
+    return (
+      <div className="carousel-container">
+        <div className="carousel-header" onClick={this.toggleCarouselStyle}>
+          <h2>Pending Tasks</h2>
+        </div>
+        <hr />
+        <div id="availableTasksConatiner" className="carousel-body">
+          <table>
+            <tbody>
+              <TableRows tasks={this.props.tasks} />
+            </tbody>
+          </table>
+          <button onClick={this.addTask}>Add Task</button>
+        </div>
+      </div>
+    );
+  }
+}

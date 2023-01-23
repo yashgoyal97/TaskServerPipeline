@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AvailableServers from './AvailableServers';
 import CompletedJobs from './CompletedJobs';
-import Tasks from './Tasks';
+import PendingTasks from './PendingTasks';
 import './style.css';
 
 export default function App() {
@@ -22,7 +22,26 @@ export default function App() {
       status: 'AVAILABLE',
     },
   ]);
+
+  const [availableServers, setAvailableServers] = useState([]);
+
+  useEffect(() => {
+    let serversAvailable = servers.filter((server) => {
+      return server.status === 'AVAILABLE';
+    });
+    setAvailableServers(serversAvailable);
+  }, [servers]);
+
   const [tasks, setTasks] = useState([]);
+
+  const [pendingTasks, setPendingTasks] = useState([]);
+
+  useEffect(() => {
+    let tasksPending = tasks.filter((task) => {
+      return task.status === 'PENDING';
+    });
+    setPendingTasks(tasksPending);
+  }, [tasks]);
 
   const addServer = () => {
     let serverDetails = {};
@@ -31,20 +50,37 @@ export default function App() {
     serverDetails['id'] = serverId;
     serverDetails['name'] = serverName;
     serverDetails['status'] = 'AVAILABLE';
-    if (servers.length < 101) {
+    //maximum servers restricted to 10
+    if (servers.length < 10) {
       setServers([...servers, serverDetails]);
     }
+  };
+
+  const addTask = () => {
+    let taskDetails = {};
+    const taskId = Math.floor(Math.random() * Math.pow(10, 8) + 1);
+    const taskName = `TSK${taskId}`;
+    taskDetails['id'] = taskId;
+    taskDetails['name'] = taskName;
+    taskDetails['status'] = 'PENDING';
+    setTasks([...tasks, taskDetails]);
+    // setCurrentTask({
+    //   id: taskId,
+    //   name: taskName,
+    //   status: 'PENDING',
+    // });
   };
 
   return (
     <div id="container">
       <h1>Dashboard</h1>
       <hr />
-      <div>
+      <div id="subContainer">
         <AvailableServers servers={servers} addServer={addServer} />
-        <CompletedJobs tasks={tasks} />
+        <PendingTasks tasks={tasks} addTask={addTask} />
       </div>
-      <Tasks tasks={tasks} />
+      <hr />
+      <CompletedJobs tasks={tasks} />
     </div>
   );
 }
