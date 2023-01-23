@@ -49,7 +49,25 @@ export default function App() {
     }
   }, [pendingTasks, availableServers]);
 
+  const [inProgressTasks, setInProgresstasks] = useState([]);
+
   const executeTask = (server, task) => {
+    let serverList = servers.map((serverItem) => {
+      if (serverItem.id === server.id) {
+        serverItem.status = 'OCCUPIED';
+      }
+      return serverItem;
+    });
+    setServers(serverList);
+
+    let taskList = tasks.map((taskItem) => {
+      if (taskItem.id === task.id) {
+        taskItem.status = 'IN_PROG';
+      }
+      return taskItem;
+    });
+    setTasks(taskList);
+
     // setTasksInProgress([...tasksInProgress, taskInProgress]);
   };
 
