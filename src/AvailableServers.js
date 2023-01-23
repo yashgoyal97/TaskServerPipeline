@@ -3,11 +3,11 @@ import './style.css';
 
 function TableRows(props) {
   const rows = props.servers.map((server) => {
-    return server.status === 'AVAILABLE' ? (
+    return (
       <tr>
         <td>{server.name}</td>
       </tr>
-    ) : null;
+    );
   });
 
   return rows;

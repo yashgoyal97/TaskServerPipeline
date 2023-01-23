@@ -3,11 +3,11 @@ import './style.css';
 
 function TableRows(props) {
   const rows = props.tasks.map((task) => {
-    return task.status === 'PENDING' ? (
+    return (
       <tr>
         <td>{task.name}</td>
       </tr>
-    ) : null;
+    );
   });
 
   return rows;

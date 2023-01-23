@@ -76,8 +76,8 @@ export default function App() {
       <h1>Dashboard</h1>
       <hr />
       <div id="subContainer">
-        <AvailableServers servers={servers} addServer={addServer} />
-        <PendingTasks tasks={tasks} addTask={addTask} />
+        <AvailableServers servers={availableServers} addServer={addServer} />
+        <PendingTasks tasks={pendingTasks} addTask={addTask} />
       </div>
       <hr />
       <CompletedJobs tasks={tasks} />
