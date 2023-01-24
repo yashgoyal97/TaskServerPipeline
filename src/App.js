@@ -94,6 +94,15 @@ export default function App() {
   //   }
   // };
 
+  const getAvailableServer = () => {
+    servers.forEach((server) => {
+      if (server.status === 'AVAILABLE') {
+        return server;
+      }
+    });
+    return;
+  };
+
   const addTask = () => {
     let taskDetails = {};
     const taskId = Math.floor(Math.random() * Math.pow(10, 8) + 1);
@@ -101,7 +110,9 @@ export default function App() {
     taskDetails['id'] = taskId;
     taskDetails['name'] = taskName;
     taskDetails['status'] = 'NEW';
-    setTasks([...tasks, taskDetails]);
+    const availableServer = getAvailableServer();
+    
+    // setTasks([...tasks, taskDetails]);
   };
 
   return (
