@@ -1,5 +1,6 @@
 import React from 'react';
 import './style.css';
+import Progress from './Progress';
 
 function TableRows(props) {
   const rows = props.jobs.map((job) => {
@@ -8,7 +9,11 @@ function TableRows(props) {
         <td>{job.name}</td>
         <td>{job.status}</td>
         <td>{job.createDateTime}</td>
-        {job.completeDateTime ? <td>{job.completeDateTime}</td> : <td>--</td>}
+        {job.completeDateTime ? (
+          <td>{job.completeDateTime}</td>
+        ) : (
+          <Progress key={job.id} />
+        )}
       </tr>
     );
   });

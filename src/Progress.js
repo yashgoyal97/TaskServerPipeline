@@ -1,3 +1,4 @@
+import React from 'react';
 export default class Progress extends React.Component {
   constructor(props) {
     super(props);
@@ -12,6 +13,12 @@ export default class Progress extends React.Component {
         progress: prevState.progress + 1,
       }));
     }, 1000);
+  }
+
+  componentDidUpdate() {
+    if (this.state.progress === 100) {
+      clearInterval(this.interval);
+    }
   }
 
   componentWillUnmount() {
