@@ -34,7 +34,7 @@ export default class Tasks extends React.Component {
 
   render() {
     return (
-      <div className="carousel-container">
+      <div id="tasksContainer" className="carousel-container">
         <div className="carousel-header" onClick={this.toggleCarouselStyle}>
           <h2>Tasks</h2>
         </div>

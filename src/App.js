@@ -149,7 +149,7 @@ export default function App() {
       updateStatus('tasks', task.id, 'ACTIVE');
     } else {
       task = createTaskObject('ACTIVE');
-      console.log(task);
+      setTasks([...tasks, task]);
     }
     console.log(task);
   };

@@ -11,6 +11,10 @@ p {
   gap: 10px;
 }
 
+#tasksContainer {
+  min-width: max-content;
+}
+
 #serversContainer {
   width: max-content;
 }
