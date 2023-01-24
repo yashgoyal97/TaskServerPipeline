@@ -3,16 +3,21 @@ import './style.css';
 import Progress from './Progress';
 
 function TableRows(props) {
+  const onJobComplete = (job) => {
+    const completeDT = new Date().toLocaleString();
+  };
   const rows = props.jobs.map((job) => {
     return (
-      <tr>
+      <tr key={job.id}>
         <td>{job.name}</td>
         <td>{job.status}</td>
         <td>{job.createDateTime}</td>
         {job.completeDateTime ? (
           <td>{job.completeDateTime}</td>
         ) : (
-          <Progress key={job.id} />
+          <td>
+            <Progress key={job.id} onJobComplete={() => onJobComplete(job)} />
+          </td>
         )}
       </tr>
     );
@@ -47,6 +52,7 @@ export default class ExecutionPipeline extends React.Component {
                 <th>Job</th>
                 <th>Status</th>
                 <th>Create Date/Time</th>
+                <th>Progress</th>
                 <th>Complete Date/Time</th>
               </tr>
             </thead>

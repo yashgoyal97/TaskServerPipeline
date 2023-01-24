@@ -4,6 +4,7 @@ export default class Progress extends React.Component {
     super(props);
     this.state = {
       progress: 0,
+      status: 'N',
     };
   }
 
@@ -12,12 +13,17 @@ export default class Progress extends React.Component {
       this.setState((prevState) => ({
         progress: prevState.progress + 1,
       }));
-    }, 200);
+    }, 100);
   }
 
   componentDidUpdate() {
-    if (this.state.progress === 100) {
+    if (this.state.progress === 100 && this.state.status === 'N') {
+      this.props.onJobComplete();
       clearInterval(this.interval);
+      this.setState((prevState) => ({
+        ...prevState,
+        status: 'Y',
+      }));
     }
   }
 

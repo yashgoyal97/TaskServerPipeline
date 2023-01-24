@@ -4,7 +4,7 @@ import './style.css';
 function TableRows(props) {
   const rows = props.servers.map((server) => {
     return (
-      <tr>
+      <tr key={server.id}>
         <td>
           {server.name}({server.status})
         </td>

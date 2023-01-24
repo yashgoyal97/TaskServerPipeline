@@ -4,7 +4,7 @@ import './style.css';
 function TableRows(props) {
   const rows = props.tasks.map((task) => {
     return (
-      <tr>
+      <tr key={task.id}>
         <td>
           {task.name}({task.status})
         </td>
