@@ -102,25 +102,39 @@ export default function App() {
       }
       return server;
     });
-
     setServers(serversList);
   };
 
-  const executeTask = (server, task) => {
-    // creating newJob object
-    let newJob = {};
-    const jobId = Math.floor(Math.random() * Math.pow(10, 8) + 1);
-    const jobName = `JOB${jobId}`;
-    newJob['name'] = jobName;
-    newJob['id'] = jobId;
-    newJob['task'] = task;
-    newJob['server'] = server;
-    newJob['status'] = 'NEW';
-    newJob['createDateTime'] = new Date().toLocaleString();
-    newJob['completeDateTime'] = null;
+  // check if task already added to tasks list
+  const taskAlreadyAvailable = (taskId) => {
+    for (let i = 0; i < tasks.length; i++) {
+      if (tasks[i].id === taskId) {
+        return true;
+      }
+    }
+    return false;
+  };
 
-    //update server status as 'OCCUPIED'
+  const executeTask = (server, task) => {
+    // // creating newJob object
+    // let newJob = {};
+    // const jobId = Math.floor(Math.random() * Math.pow(10, 8) + 1);
+    // const jobName = `JOB${jobId}`;
+    // newJob['name'] = jobName;
+    // newJob['id'] = jobId;
+    // newJob['task'] = task;
+    // newJob['server'] = server;
+    // newJob['status'] = 'NEW';
+    // newJob['createDateTime'] = new Date().toLocaleString();
+    // newJob['completeDateTime'] = null;
+
     updateServerStatus(server.id);
+
+    if (taskAlreadyAvailable(task.id)) {
+      updateTaskStatus(task.id);
+    } else {
+      createTask('ACTIVE');
+    }
   };
 
   const getAvailableServer = () => {
@@ -133,18 +147,17 @@ export default function App() {
   };
 
   const addTask = () => {
-    let taskDetails = {};
-    const taskId = Math.floor(Math.random() * Math.pow(10, 8) + 1);
-    const taskName = `TSK${taskId}`;
-    taskDetails['id'] = taskId;
-    taskDetails['name'] = taskName;
-    taskDetails['status'] = 'NEW';
-
     const availableServer = getAvailableServer();
     // check if there is an available server
     if (availableServer) {
-      executeTask(availableServer, taskDetails);
+      executeTask(availableServer);
     } else {
+      let taskDetails = {};
+      const taskId = Math.floor(Math.random() * Math.pow(10, 8) + 1);
+      const taskName = `TSK${taskId}`;
+      taskDetails['id'] = taskId;
+      taskDetails['name'] = taskName;
+      taskDetails['status'] = 'NEW';
       setTasks([...tasks, taskDetails]);
     }
   };
