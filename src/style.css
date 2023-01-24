@@ -11,6 +11,10 @@ p {
   gap: 10px;
 }
 
+#serversContainer {
+  width: max-content;
+}
+
 .carousel-container {
   width: -webkit-fill-available;
   background-color: whitesmoke;

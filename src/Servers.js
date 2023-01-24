@@ -5,8 +5,9 @@ function TableRows(props) {
   const rows = props.servers.map((server) => {
     return (
       <tr>
-        <td>{server.name}</td>
-        <td>{server.status}</td>
+        <td>
+          {server.name}({server.status})
+        </td>
       </tr>
     );
   });
@@ -26,26 +27,26 @@ export default class Servers extends React.Component {
   // }
 
   toggleCarouselStyle() {
-    let serverContainer = document.getElementById('availableServersConatiner');
+    let serverContainer = document.getElementById('serversListContainer');
     serverContainer.style.display =
       serverContainer.style.display === 'none' ? 'flex' : 'none';
   }
 
   render() {
     return (
-      <div className="carousel-container">
+      <div id="serversContainer" className="carousel-container">
         <div className="carousel-header" onClick={this.toggleCarouselStyle}>
           <h2>Servers</h2>
         </div>
         <hr />
-        <div id="availableServersConatiner" className="carousel-body">
+        <div id="serversListContainer" className="carousel-body">
           <table>
-            <thead>
+            {/* <thead>
               <tr>
                 <th>NAME</th>
                 <th>STATUS</th>
               </tr>
-            </thead>
+            </thead> */}
             <tbody>
               <TableRows servers={this.props.servers} />
             </tbody>

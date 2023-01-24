@@ -46,12 +46,12 @@ export default function App() {
 
   const [pendingTasks, setPendingTasks] = useState([]);
 
-  useEffect(() => {
-    let tasksPending = tasks.filter((task) => {
-      return task.status === 'PENDING';
-    });
-    setPendingTasks(tasksPending);
-  }, [tasks]);
+  // useEffect(() => {
+  //   let tasksPending = tasks.filter((task) => {
+  //     return task.status === 'PENDING';
+  //   });
+  //   setPendingTasks(tasksPending);
+  // }, [tasks]);
 
   useEffect(() => {
     if (pendingTasks.length && availableServers.length) {
@@ -100,7 +100,7 @@ export default function App() {
     const taskName = `TSK${taskId}`;
     taskDetails['id'] = taskId;
     taskDetails['name'] = taskName;
-    taskDetails['status'] = 'PENDING';
+    taskDetails['status'] = 'NEW';
     setTasks([...tasks, taskDetails]);
   };
 

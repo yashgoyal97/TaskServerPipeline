@@ -5,7 +5,9 @@ function TableRows(props) {
   const rows = props.tasks.map((task) => {
     return (
       <tr>
-        <td>{task.name}</td>
+        <td>
+          {task.name}({task.status})
+        </td>
       </tr>
     );
   });
