@@ -35,16 +35,16 @@ export default function App() {
 
   const [tasks, setTasks] = useState([]);
 
-  const [availableServers, setAvailableServers] = useState([]);
+  // const [availableServers, setAvailableServers] = useState([]);
 
-  useEffect(() => {
-    let serversAvailable = servers.filter((server) => {
-      return server.status === 'AVAILABLE';
-    });
-    setAvailableServers(serversAvailable);
-  }, [servers]);
+  // useEffect(() => {
+  //   let serversAvailable = servers.filter((server) => {
+  //     return server.status === 'AVAILABLE';
+  //   });
+  //   setAvailableServers(serversAvailable);
+  // }, [servers]);
 
-  const [pendingTasks, setPendingTasks] = useState([]);
+  // const [pendingTasks, setPendingTasks] = useState([]);
 
   // useEffect(() => {
   //   let tasksPending = tasks.filter((task) => {
@@ -53,33 +53,33 @@ export default function App() {
   //   setPendingTasks(tasksPending);
   // }, [tasks]);
 
-  useEffect(() => {
-    if (pendingTasks.length && availableServers.length) {
-      executeTask(pendingTasks[0], availableServers[0]);
-    }
-  }, [pendingTasks, availableServers]);
+  // useEffect(() => {
+  //   if (pendingTasks.length && availableServers.length) {
+  //     executeTask(pendingTasks[0], availableServers[0]);
+  //   }
+  // }, [pendingTasks, availableServers]);
 
-  const [inProgressTasks, setInProgresstasks] = useState([]);
+  // const [inProgressTasks, setInProgresstasks] = useState([]);
 
-  const executeTask = (server, task) => {
-    let serverList = servers.map((serverItem) => {
-      if (serverItem.id === server.id) {
-        serverItem.status = 'OCCUPIED';
-      }
-      return serverItem;
-    });
-    setServers(serverList);
+  // const executeTask = (server, task) => {
+  //   let serverList = servers.map((serverItem) => {
+  //     if (serverItem.id === server.id) {
+  //       serverItem.status = 'OCCUPIED';
+  //     }
+  //     return serverItem;
+  //   });
+  //   setServers(serverList);
 
-    let taskList = tasks.map((taskItem) => {
-      if (taskItem.id === task.id) {
-        taskItem.status = 'IN_PROG';
-      }
-      return taskItem;
-    });
-    setTasks(taskList);
+  //   let taskList = tasks.map((taskItem) => {
+  //     if (taskItem.id === task.id) {
+  //       taskItem.status = 'IN_PROG';
+  //     }
+  //     return taskItem;
+  //   });
+  //   setTasks(taskList);
 
-    // setTasksInProgress([...tasksInProgress, taskInProgress]);
-  };
+  //   // setTasksInProgress([...tasksInProgress, taskInProgress]);
+  // };
 
   // const addServer = () => {
   //   let serverDetails = {};
@@ -103,6 +103,20 @@ export default function App() {
     return;
   };
 
+  const executeTask = (server, task) => {
+    let newJob = {};
+    const jobId = Math.floor(Math.random() * Math.pow(10, 8) + 1);
+    const jobName = `JOB${jobId}`;
+    newJob['name'] = jobName;
+    newJob['id'] = jobId;
+    newJob['task'] = task;
+    newJob['server'] = server;
+    newJob['status'] = 'NEW';
+    newJob['createDateTime'] = new Date().toLocaleString();
+    newJob['progress'] = 0;
+    newJob['status'] = 'NEW';
+  };
+
   const addTask = () => {
     let taskDetails = {};
     const taskId = Math.floor(Math.random() * Math.pow(10, 8) + 1);
@@ -110,14 +124,14 @@ export default function App() {
     taskDetails['id'] = taskId;
     taskDetails['name'] = taskName;
     taskDetails['status'] = 'NEW';
+
     const availableServer = getAvailableServer();
-    console.log(availableServer);
+    // check if there is an available server
     if (availableServer) {
-      console.log('Server available...', availableServer);
+      executeTask(availableServer, taskDetails);
     } else {
-      console.log('not ');
+      setTasks([...tasks, taskDetails]);
     }
-    // setTasks([...tasks, taskDetails]);
   };
 
   return (
