@@ -2,20 +2,21 @@ import React from 'react';
 import './style.css';
 
 function TableRows(props) {
-  const rows = props.tasks.map((task) => {
-    return task.status === 'COMPLETED' ? (
+  const rows = props.jobs.map((job) => {
+    return (
       <tr>
-        <td>{task.name}</td>
-        <td>{task.completedBy}</td>
-        <td>{task.completedOn}</td>
+        <td>{job.name}</td>
+        <td>{job.status}</td>
+        <td>{job.createDateTime}</td>
+        {job.completeDateTime ? <td>{job.completeDateTime}</td> : <td>--</td>}
       </tr>
-    ) : null;
+    );
   });
 
   return rows;
 }
 
-export default class CompletedJobs extends React.Component {
+export default class ExecutionPipeline extends React.Component {
   constructor(props) {
     super(props);
     this.toggleCarouselStyle = this.toggleCarouselStyle.bind(this);
@@ -31,20 +32,21 @@ export default class CompletedJobs extends React.Component {
     return (
       <div className="carousel-container">
         <div className="carousel-header" onClick={this.toggleCarouselStyle}>
-          <h2>Tasks Completed</h2>
+          <h2>Execution Pipeline</h2>
         </div>
         <hr />
         <div id="completedTasksConatiner" className="carousel-body">
           <table>
             <thead>
               <tr>
-                <th>Task</th>
-                <th>Server</th>
-                <th>Date/Time</th>
+                <th>Job</th>
+                <th>Status</th>
+                <th>Create Date/Time</th>
+                <th>Complete Date/Time</th>
               </tr>
             </thead>
             <tbody>
-              <TableRows tasks={this.props.tasks} />
+              <TableRows jobs={this.props.jobs} />
             </tbody>
           </table>
         </div>
