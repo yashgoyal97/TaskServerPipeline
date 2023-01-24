@@ -94,6 +94,16 @@ export default function App() {
   //   }
   // };
 
+  const createTaskObject = (status) => {
+    let taskDetails = {};
+    const taskId = Math.floor(Math.random() * Math.pow(10, 8) + 1);
+    const taskName = `TSK${taskId}`;
+    taskDetails['id'] = taskId;
+    taskDetails['name'] = taskName;
+    taskDetails['status'] = status;
+    return taskDetails;
+  };
+
   const updateServerStatus = (serverId) => {
     let serversList = servers.map((server) => {
       if (server.id === serverId) {
@@ -129,12 +139,13 @@ export default function App() {
     // newJob['completeDateTime'] = null;
 
     updateServerStatus(server.id);
-
-    if (taskAlreadyAvailable(task.id)) {
+    if (task && taskAlreadyAvailable(task.id)) {
       updateTaskStatus(task.id);
     } else {
-      createTask('ACTIVE');
+      task = createTaskObject('ACTIVE');
+      console.log(task);
     }
+    console.log(task);
   };
 
   const getAvailableServer = () => {
@@ -152,13 +163,7 @@ export default function App() {
     if (availableServer) {
       executeTask(availableServer);
     } else {
-      let taskDetails = {};
-      const taskId = Math.floor(Math.random() * Math.pow(10, 8) + 1);
-      const taskName = `TSK${taskId}`;
-      taskDetails['id'] = taskId;
-      taskDetails['name'] = taskName;
-      taskDetails['status'] = 'NEW';
-      setTasks([...tasks, taskDetails]);
+      setTasks([...tasks, createTaskObject('NEW')]);
     }
   };
 
