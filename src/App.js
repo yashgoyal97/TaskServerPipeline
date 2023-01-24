@@ -94,16 +94,20 @@ export default function App() {
   //   }
   // };
 
-  const getAvailableServer = () => {
-    for (let i = 0; i < servers.length; i++) {
-      if (servers[i].status === 'AVAILABLE') {
-        return servers[i];
+  const updateServerStatus = (serverId) => {
+    let serversList = servers.map((server) => {
+      if (server.id === serverId) {
+        server.status =
+          server.status === 'AVAILABLE' ? 'OCCUPIED' : 'AVAILABLE';
       }
-    }
-    return;
+      return server;
+    });
+
+    setServers(serversList);
   };
 
   const executeTask = (server, task) => {
+    // creating newJob object
     let newJob = {};
     const jobId = Math.floor(Math.random() * Math.pow(10, 8) + 1);
     const jobName = `JOB${jobId}`;
@@ -113,8 +117,19 @@ export default function App() {
     newJob['server'] = server;
     newJob['status'] = 'NEW';
     newJob['createDateTime'] = new Date().toLocaleString();
-    newJob['progress'] = 0;
-    newJob['status'] = 'NEW';
+    newJob['completeDateTime'] = null;
+
+    //update server status as 'OCCUPIED'
+    updateServerStatus(server.id);
+  };
+
+  const getAvailableServer = () => {
+    for (let i = 0; i < servers.length; i++) {
+      if (servers[i].status === 'AVAILABLE') {
+        return servers[i];
+      }
+    }
+    return;
   };
 
   const addTask = () => {
