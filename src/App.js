@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import AvailableServers from './AvailableServers';
+import Servers from './Servers';
 import CompletedJobs from './CompletedJobs';
-import PendingTasks from './PendingTasks';
+import Tasks from './Tasks';
 import './style.css';
 
 export default function App() {
@@ -21,7 +21,19 @@ export default function App() {
       name: 'SERV19538674',
       status: 'AVAILABLE',
     },
+    {
+      id: 14884549,
+      name: 'SERV14884549',
+      status: 'AVAILABLE',
+    },
+    {
+      id: 84088868,
+      name: 'SERV84088868',
+      status: 'AVAILABLE',
+    },
   ]);
+
+  const [tasks, setTasks] = useState([]);
 
   const [availableServers, setAvailableServers] = useState([]);
 
@@ -31,8 +43,6 @@ export default function App() {
     });
     setAvailableServers(serversAvailable);
   }, [servers]);
-
-  const [tasks, setTasks] = useState([]);
 
   const [pendingTasks, setPendingTasks] = useState([]);
 
@@ -71,18 +81,18 @@ export default function App() {
     // setTasksInProgress([...tasksInProgress, taskInProgress]);
   };
 
-  const addServer = () => {
-    let serverDetails = {};
-    const serverId = Math.floor(Math.random() * Math.pow(10, 8) + 1);
-    const serverName = `SERV${serverId}`;
-    serverDetails['id'] = serverId;
-    serverDetails['name'] = serverName;
-    serverDetails['status'] = 'AVAILABLE';
-    //maximum servers restricted to 10
-    if (servers.length < 10) {
-      setServers([...servers, serverDetails]);
-    }
-  };
+  // const addServer = () => {
+  //   let serverDetails = {};
+  //   const serverId = Math.floor(Math.random() * Math.pow(10, 8) + 1);
+  //   const serverName = `SERV${serverId}`;
+  //   serverDetails['id'] = serverId;
+  //   serverDetails['name'] = serverName;
+  //   serverDetails['status'] = 'AVAILABLE';
+  //   //maximum servers restricted to 10
+  //   if (servers.length < 10) {
+  //     setServers([...servers, serverDetails]);
+  //   }
+  // };
 
   const addTask = () => {
     let taskDetails = {};
@@ -99,8 +109,8 @@ export default function App() {
       <h1>Dashboard</h1>
       <hr />
       <div id="subContainer">
-        <AvailableServers servers={availableServers} addServer={addServer} />
-        <PendingTasks tasks={pendingTasks} addTask={addTask} />
+        <Servers servers={servers} />
+        <Tasks tasks={tasks} addTask={addTask} />
       </div>
       <hr />
       <CompletedJobs tasks={tasks} />

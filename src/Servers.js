@@ -6,6 +6,7 @@ function TableRows(props) {
     return (
       <tr>
         <td>{server.name}</td>
+        <td>{server.status}</td>
       </tr>
     );
   });
@@ -13,16 +14,16 @@ function TableRows(props) {
   return rows;
 }
 
-export default class AvailableServers extends React.Component {
+export default class Servers extends React.Component {
   constructor(props) {
     super(props);
-    this.addServer = this.addServer.bind(this);
+    // this.addServer = this.addServer.bind(this);
     this.toggleCarouselStyle = this.toggleCarouselStyle.bind(this);
   }
 
-  addServer() {
-    this.props.addServer();
-  }
+  // addServer() {
+  //   this.props.addServer();
+  // }
 
   toggleCarouselStyle() {
     let serverContainer = document.getElementById('availableServersConatiner');
@@ -34,16 +35,22 @@ export default class AvailableServers extends React.Component {
     return (
       <div className="carousel-container">
         <div className="carousel-header" onClick={this.toggleCarouselStyle}>
-          <h2>Available Servers</h2>
+          <h2>Servers</h2>
         </div>
         <hr />
         <div id="availableServersConatiner" className="carousel-body">
           <table>
+            <thead>
+              <tr>
+                <th>NAME</th>
+                <th>STATUS</th>
+              </tr>
+            </thead>
             <tbody>
               <TableRows servers={this.props.servers} />
             </tbody>
           </table>
-          <button onClick={this.addServer}>Add Server</button>
+          {/* <button onClick={this.addServer}>Add Server</button> */}
         </div>
       </div>
     );

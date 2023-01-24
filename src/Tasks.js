@@ -13,7 +13,7 @@ function TableRows(props) {
   return rows;
 }
 
-export default class PendingTasks extends React.Component {
+export default class Tasks extends React.Component {
   constructor(props) {
     super(props);
     this.addTask = this.addTask.bind(this);
@@ -34,7 +34,7 @@ export default class PendingTasks extends React.Component {
     return (
       <div className="carousel-container">
         <div className="carousel-header" onClick={this.toggleCarouselStyle}>
-          <h2>Pending Tasks</h2>
+          <h2>Tasks</h2>
         </div>
         <hr />
         <div id="availableTasksConatiner" className="carousel-body">
