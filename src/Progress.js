@@ -12,7 +12,7 @@ export default class Progress extends React.Component {
       this.setState((prevState) => ({
         progress: prevState.progress + 1,
       }));
-    }, 1000);
+    }, 200);
   }
 
   componentDidUpdate() {
