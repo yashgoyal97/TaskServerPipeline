@@ -95,11 +95,11 @@ export default function App() {
   // };
 
   const getAvailableServer = () => {
-    servers.forEach((server) => {
-      if (server.status === 'AVAILABLE') {
-        return server;
+    for (let i = 0; i < servers.length; i++) {
+      if (servers[i].status === 'AVAILABLE') {
+        return servers[i];
       }
-    });
+    }
     return;
   };
 
@@ -111,7 +111,12 @@ export default function App() {
     taskDetails['name'] = taskName;
     taskDetails['status'] = 'NEW';
     const availableServer = getAvailableServer();
-    
+    console.log(availableServer);
+    if (availableServer) {
+      console.log('Server available...', availableServer);
+    } else {
+      console.log('not ');
+    }
     // setTasks([...tasks, taskDetails]);
   };
 
