@@ -46,18 +46,29 @@ export default function App() {
     return taskDetails;
   };
 
-  const updateStatus = (type, id, status) => {
-    const arr = type === 'tasks' ? tasks : servers;
-    let list = arr.map((item) => {
-      if (item.id === id) {
-        item.status = status;
-      }
-      return item;
-    });
-    if (type === 'tasks') {
-      setTasks(list);
+  const updateStatus = (type, id, status, completeDateTime) => {
+    if (type === 'jobs') {
+      let jobList = jobs.map((job) => {
+        if (job.id === id) {
+          job.status = status;
+          job.completeDateTime = completeDateTime;
+        }
+        return job;
+      });
+      setJobs(jobList);
     } else {
-      setServers(list);
+      const arr = type === 'tasks' ? tasks : servers;
+      let list = arr.map((item) => {
+        if (item.id === id) {
+          item.status = status;
+        }
+        return item;
+      });
+      if (type === 'tasks') {
+        setTasks(list);
+      } else {
+        setServers(list);
+      }
     }
   };
 
@@ -117,6 +128,12 @@ export default function App() {
     }
   };
 
+  const updateRecordsOnCompletion = (data, dateTime) => {
+    console.log(data, dateTime);
+    updateStatus('tasks', data.task.id, 'COMPLETED');
+    updateStatus('jobs', data.id, 'COMPLETED', dateTime);
+  };
+
   return (
     <div id="container">
       <h1>Dashboard</h1>
@@ -126,7 +143,10 @@ export default function App() {
         <Tasks tasks={tasks} addTask={addTask} />
       </div>
       <hr />
-      <ExecutionPipeline jobs={jobs} />
+      <ExecutionPipeline
+        jobs={jobs}
+        updateRecordsOnCompletion={updateRecordsOnCompletion}
+      />
     </div>
   );
 }

@@ -17,6 +17,7 @@ p {
 
 #serversContainer {
   width: max-content;
+  min-width: max-content;
 }
 
 .carousel-container {

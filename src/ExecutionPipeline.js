@@ -4,7 +4,8 @@ import Progress from './Progress';
 
 function TableRows(props) {
   const onJobComplete = (job) => {
-    const completeDT = new Date().toLocaleString();
+    const completeDateTime = new Date().toLocaleString();
+    props.updateRecordsOnCompletion(job, completeDateTime);
   };
   const rows = props.jobs.map((job) => {
     return (
@@ -12,13 +13,10 @@ function TableRows(props) {
         <td>{job.name}</td>
         <td>{job.status}</td>
         <td>{job.createDateTime}</td>
-        {job.completeDateTime ? (
-          <td>{job.completeDateTime}</td>
-        ) : (
-          <td>
-            <Progress key={job.id} onJobComplete={() => onJobComplete(job)} />
-          </td>
-        )}
+        <td>
+          <Progress key={job.id} onJobComplete={() => onJobComplete(job)} />
+        </td>
+        <td>{job.completeDateTime}</td>
       </tr>
     );
   });
@@ -30,12 +28,17 @@ export default class ExecutionPipeline extends React.Component {
   constructor(props) {
     super(props);
     this.toggleCarouselStyle = this.toggleCarouselStyle.bind(this);
+    this.updateRecordsOnCompletion = this.updateRecordsOnCompletion.bind(this);
   }
 
   toggleCarouselStyle() {
     let taskContainer = document.getElementById('completedTasksConatiner');
     taskContainer.style.display =
       taskContainer.style.display === 'none' ? 'block' : 'none';
+  }
+
+  updateRecordsOnCompletion(job, dateTime) {
+    this.props.updateRecordsOnCompletion(job, dateTime);
   }
 
   render() {
@@ -57,7 +60,10 @@ export default class ExecutionPipeline extends React.Component {
               </tr>
             </thead>
             <tbody>
-              <TableRows jobs={this.props.jobs} />
+              <TableRows
+                jobs={this.props.jobs}
+                updateRecordsOnCompletion={this.updateRecordsOnCompletion}
+              />
             </tbody>
           </table>
         </div>
