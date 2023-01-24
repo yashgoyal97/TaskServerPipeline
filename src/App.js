@@ -132,6 +132,7 @@ export default function App() {
     console.log(data, dateTime);
     updateStatus('tasks', data.task.id, 'COMPLETED');
     updateStatus('jobs', data.id, 'COMPLETED', dateTime);
+    updateStatus('servers', data.server.id, 'AVAILABLE');
   };
 
   return (
