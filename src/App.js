@@ -104,15 +104,19 @@ export default function App() {
     return taskDetails;
   };
 
-  const updateServerStatus = (serverId) => {
-    let serversList = servers.map((server) => {
-      if (server.id === serverId) {
-        server.status =
-          server.status === 'AVAILABLE' ? 'OCCUPIED' : 'AVAILABLE';
+  const updateStatus = (type, id, status) => {
+    const arr = type === 'tasks' ? tasks : servers;
+    let list = arr.map((item) => {
+      if (item.id === id) {
+        item.status = status;
       }
-      return server;
+      return item;
     });
-    setServers(serversList);
+    if (type === 'tasks') {
+      setTasks(list);
+    } else {
+      setServers(list);
+    }
   };
 
   // check if task already added to tasks list
@@ -138,9 +142,11 @@ export default function App() {
     // newJob['createDateTime'] = new Date().toLocaleString();
     // newJob['completeDateTime'] = null;
 
-    updateServerStatus(server.id);
+    //update server status
+    updateStatus('servers', server.id, 'OCCUPIED');
     if (task && taskAlreadyAvailable(task.id)) {
-      updateTaskStatus(task.id);
+      //update task status
+      updateStatus('tasks', task.id, 'ACTIVE');
     } else {
       task = createTaskObject('ACTIVE');
       console.log(task);
