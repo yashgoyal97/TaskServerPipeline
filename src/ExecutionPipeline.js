@@ -13,10 +13,10 @@ function TableRows(props) {
         <td>{job.name}</td>
         <td>{job.status}</td>
         <td>{job.createDateTime}</td>
+        {job.completeDateTime ? <td>{job.completeDateTime}</td> : <td>--</td>}
         <td>
           <Progress key={job.id} onJobComplete={() => onJobComplete(job)} />
         </td>
-        <td>{job.completeDateTime}</td>
       </tr>
     );
   });
@@ -27,15 +27,15 @@ function TableRows(props) {
 export default class ExecutionPipeline extends React.Component {
   constructor(props) {
     super(props);
-    this.toggleCarouselStyle = this.toggleCarouselStyle.bind(this);
+    // this.toggleCarouselStyle = this.toggleCarouselStyle.bind(this);
     this.updateRecordsOnCompletion = this.updateRecordsOnCompletion.bind(this);
   }
 
-  toggleCarouselStyle() {
-    let taskContainer = document.getElementById('completedTasksConatiner');
-    taskContainer.style.display =
-      taskContainer.style.display === 'none' ? 'block' : 'none';
-  }
+  // toggleCarouselStyle() {
+  //   let taskContainer = document.getElementById('executionPipelineConatiner');
+  //   taskContainer.style.display =
+  //     taskContainer.style.display === 'none' ? 'block' : 'none';
+  // }
 
   updateRecordsOnCompletion(job, dateTime) {
     this.props.updateRecordsOnCompletion(job, dateTime);
@@ -44,28 +44,29 @@ export default class ExecutionPipeline extends React.Component {
   render() {
     return (
       <div className="carousel-container">
-        <div className="carousel-header" onClick={this.toggleCarouselStyle}>
+        <div className="carousel-header">
           <h2>Execution Pipeline</h2>
         </div>
         <hr />
-        <div id="completedTasksConatiner" className="carousel-body">
-          <table>
-            <thead>
-              <tr>
-                <th>Job</th>
-                <th>Status</th>
-                <th>Create Date/Time</th>
-                <th>Progress</th>
-                <th>Complete Date/Time</th>
-              </tr>
-            </thead>
-            <tbody>
-              <TableRows
-                jobs={this.props.jobs}
-                updateRecordsOnCompletion={this.updateRecordsOnCompletion}
-              />
-            </tbody>
-          </table>
+        <div id="executionPipelineConatiner" className="carousel-body">
+          {this.props.jobs.length ? (
+            <table>
+              <thead>
+                <tr>
+                  <th>Job</th>
+                  <th>Status</th>
+                  <th>Create Date/Time</th>
+                  <th>Complete Date/Time</th>
+                </tr>
+              </thead>
+              <tbody>
+                <TableRows
+                  jobs={this.props.jobs}
+                  updateRecordsOnCompletion={this.updateRecordsOnCompletion}
+                />
+              </tbody>
+            </table>
+          ) : null}
         </div>
       </div>
     );

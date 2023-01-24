@@ -118,6 +118,15 @@ export default function App() {
     return;
   };
 
+  const getNewTask = () => {
+    for (let i = 0; i < tasks.length; i++) {
+      if (tasks[i].status === 'NEW') {
+        return tasks[i];
+      }
+    }
+    return;
+  };
+
   const addTask = () => {
     const availableServer = getAvailableServer();
     // check if there is an available server
@@ -132,7 +141,12 @@ export default function App() {
     console.log(data, dateTime);
     updateStatus('tasks', data.task.id, 'COMPLETED');
     updateStatus('jobs', data.id, 'COMPLETED', dateTime);
-    updateStatus('servers', data.server.id, 'AVAILABLE');
+    const newTask = getNewTask();
+    if (newTask) {
+      executeTask(data.server, newTask);
+    } else {
+      updateStatus('servers', data.server.id, 'AVAILABLE');
+    }
   };
 
   return (

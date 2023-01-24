@@ -1,4 +1,5 @@
 import React from 'react';
+import { MdExpandMore, MdExpandLess } from 'react-icons/md';
 import './style.css';
 
 function TableRows(props) {
@@ -20,6 +21,9 @@ export default class Servers extends React.Component {
     super(props);
     // this.addServer = this.addServer.bind(this);
     this.toggleCarouselStyle = this.toggleCarouselStyle.bind(this);
+    this.state = {
+      collapse: false,
+    };
   }
 
   // addServer() {
@@ -30,13 +34,17 @@ export default class Servers extends React.Component {
     let serverContainer = document.getElementById('serversListContainer');
     serverContainer.style.display =
       serverContainer.style.display === 'none' ? 'flex' : 'none';
+    this.setState((prevState) => ({
+      collapse: !prevState.collapse,
+    }));
   }
 
   render() {
     return (
       <div id="serversContainer" className="carousel-container">
         <div className="carousel-header" onClick={this.toggleCarouselStyle}>
-          <h2>Servers</h2>
+          <h2>Servers [{this.props.servers.length}]</h2>
+          {this.state.collapse ? <MdExpandLess /> : <MdExpandMore />}
         </div>
         <hr />
         <div id="serversListContainer" className="carousel-body">
